@@ -1,13 +1,31 @@
-## Tercera pre entrega
+## Entrega proyecto final - Python
 
-El punto de entrada de la aplicacion es el '/'. 
-En las pestañas Empleados, Autos y Clientes se pueden añadir cada una de ellas.
-Para la creación de datos dentro de la tabla posiciones, cuya es una tabla para saber los cargos de los empleados, se utilizaron seeders de django.
+### Autor: Iván Lautaro Garcilazo
 
-Se pueden cargar datos en empleados, los empleados se verán debajo del fomulario.
-Se pueden cargar datos de clientes.
-Se pueden cargar datos de autos, estos se verán en el index, y si se realiza una búsqueda, retornará los resultados esperados
+### Acerca de:
+Este proyecto es una aplicación de línea de comandos que permite a los usuarios simular una página de compra y ventas de autos usados.
 
-El buscador se encuentra en la página principal, los controladores en la sección de AppKinda/views.py
+### Accesibilidad:
+#### Logueados:
+1. Los usuarios logueados pueden crear, editar, eliminar posteos acerca de el auto en cuestión.
+2. Tienen acceso a modificar su perfil, su contraseña, email, nombre, etc.
+3. Pueden realizar opiniones en cada posteo creado, y así comunicarse con demás usuarios como un sistema de mensajes.
+#### No logueados
+1. Pueden ver todos los posteos y sus respectivos comentarios.
+2. Tienen vistas restringidas o permitidas solo para el usuario que está logueado.
+3. Pueden contactar también o ver datos del que publica un posteo.
 
-Al administrador se ingresa con admin - admin 
+#### General
+1. La aplicación tiene un sistema de búsqueda para encontrar posteos por nombre.
+2. La aplicación permite el registro, logueo y logout de sesiones de usuarios.
+3. Visualizar y comentar posts acerca de publicaciónes
+
+### Herramientas
+Para el desarrollo de el sitio web se utilizaron las siguientes herramientas:
+1. Python 3.12.2
+2. Django como framework
+3. TailwindCSS - Mediante CDN
+4. HTML5
+
+### Video
+[Video de funcionamiento](https://www.youtube.com/watch?v=GiNcwhcjDxE&ab_channel=IvanLautaroGarcilazo)
