@@ -1,25 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
+from AppAccount.models import *
 
-# Create your models here.
+class CommentPost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(CarPosts, on_delete=models.CASCADE, default=1)
+    comment = models.CharField(max_length=255)
+    created_at = models.DateTimeField(default=timezone.now)
 
-class Position(models.Model):
-    name=models.CharField(max_length=40)
-
-class Employee(models.Model):
-    name=models.CharField(max_length=40)
-    email=models.EmailField()
-    contract_date=models.DateField()
-    position=models.ForeignKey(Position, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'Comentario de: {self.user.name}'
     
-class Cars(models.Model):
-    name=models.CharField(max_length=40)
-    price=models.IntegerField()
-    color=models.CharField(max_length=40)
-    image = models.CharField(max_length=100) 
-    description = models.CharField(max_length=255)
-
-class Client(models.Model):
-    name=models.CharField(max_length=40)
-    email=models.EmailField()
-    phone=models.CharField(max_length=40)
-    address=models.CharField(max_length=40)

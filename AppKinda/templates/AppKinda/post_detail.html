@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block layout %}
+<section class="px-32 py-15 2xl:py-32 2xl:px-72">
+    <div class="w-full flex items-center h-[30rem] mb-10">
+        <img src="{{ post.image.url }}" alt="" class="w-1/2 h-full object-cover object-center">
+        <div class="w-1/2 p-5 h-full">
+            <div class="bg-blue-600 h-full text-white p-10 flex flex-col gap-2">
+                <h1 class="text-4xl font-bold word-break">{{ post.title }}</h1>
+                <div class="w-full border border-white"></div>
+                <p class="min-h-36 overflow-auto">{{ post.description }}</p>
+                <p class="text-3xl font-bold block">${{ post.price }}</p>
+                <p class="block">Subido el: {{ post.created_at }}</p>
+                <a href="mailto:{{ post.user.email }}"
+                    class="w-full bg-white text-blue-600 font-bold hover:opacity-30 text-center py-3">Contactar al
+                    vendedor {{ post.user.email }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-5">
+        <h2 class="text-3xl font-bold text-blue-600">Opiniones:</h2>
+        {% if request.user.is_authenticated %}
+        <form class="flex w-full items-center justify-center w-full" method="post"
+            action="{% url 'anadir_comentario_publicacion' %}">
+            {% csrf_token %}
+            <input type="hidden" value="{{ post.id }}" name="post_id">
+            <textarea placeholder="Añade tu propia opinion" class="border w-5/6 p-1" name="comment" id=""
+                rows="2"></textarea>
+            <button class="py-4 px-4 bg-gray-600 text-white">Comentar</button>
+        </form>
+        {% else %}
+        <p class="text-xl font-bold">Debes estar logueado para dejar un comentario</p>
+        {% endif %}
+        <ul class="w-full overflow-auto max-h-96 flex items-center gap-3 px-10 flex-col">
+            {% for comment in comments %}
+            <li class="flex flex-col gap-3 bg-gray-100 p-2 w-full">
+                <div class="flex items-center">
+                    <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
+                            class="mr-2 w-6 h-6 rounded-full"
+                            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                            alt="{{comment.user}}">{{comment.user}}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-03-12"
+                            title="March 12th, 2022">{{comment.created_at}}</time></p>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400">{{comment.comment}}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="mt-10">
+        <h2 class="text-3xl font-bold underline text-gray-600">Recomendados:</h2>
+        <div class="w-full my-10 grid grid-cols-5 gap-5">
+            {% for promoted_post in promoted_products %}
+            <a class="" href="{% url 'detalle_publicacion' promoted_post.pk %}">
+                <img src="{{ promoted_post.image.url }}" class="w-52 h-52 object-center object-cover hover:scale-110"
+                    alt="">
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

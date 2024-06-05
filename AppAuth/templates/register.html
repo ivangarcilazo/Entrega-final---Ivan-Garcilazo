@@ -1,0 +1,39 @@
+{% extends "layoutLogin.html" %}
+{% load static %}
+{% block modal %}
+<div class="w-[30rem] h-[30rem] rounded-xl bg-gray-500 p-5 bg-transparent">
+    <h1 class="text-4xl text-white font-bold">Registrate</h1>
+    <form method="post" class="flex flex-col gap-5 pt-5">
+        {% csrf_token %}
+        
+        <input type="email" name="email" class="py-2 px-1 w-full rounded" placeholder="Correo" value="{{form.email.value|default:''}}">
+        {% if form.email.errors %}
+            <p class="text-red-500">{{ form.email.errors.0 }}</p>
+        {% endif %}
+
+        <input type="text" name="username" class="py-2 px-1 w-full rounded" placeholder="Crea tu usuario" value="{{form.username.value|default:''}}">
+        {% if form.username.errors %}
+            <p class="text-red-500">{{ form.username.errors.0 }}</p>
+        {% endif %}
+        
+        
+        <input type="password" name="password1" class="py-2 px-1 w-full rounded" placeholder="Tu nueva contraseña">
+        {% if form.password1.errors %}
+            <p class="text-red-500">{{ form.password1.errors.0 }}</p>
+        {% endif %}
+        
+        <input type="password" name="password2" class="py-2 px-1 w-full rounded" placeholder="Repite tu contraseña">
+        {% if form.password2.errors %}
+            <p class="text-red-500">{{ form.password2.errors.0 }}</p>
+        {% endif %}
+
+        <button type="submit" class="py-2 px-2 bg-white rounded-xl text-center w-full text-indigo-600">
+            Ingresar
+        </button>
+        
+        {% if form.non_field_errors %}
+            <p class="text-red-500">{{ form.non_field_errors.0 }}</p>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

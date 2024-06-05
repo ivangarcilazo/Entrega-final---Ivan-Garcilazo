@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block layout %}
+<section class="w-full flex">
+
+    {% with request.resolver_match.url_name as url_name %}
+    <nav class="w-1/4 border-0 border-r-1 border-indigo-500 h-screen flex flex-col items-center justify-star">
+        <a class="w-full text-xl font-bold py-2 hover:opacity-[80%] {% if url_name == 'cuenta' %}bg-blue-600 text-white {% else %} text-blue-600 {% endif %} text-center"
+            href="{% url 'cuenta' %}">Mi cuenta</a>
+        <a class="w-full text-xl font-bold py-2 hover:opacity-[80%] {% if url_name == 'mis_publicaciones' %}bg-blue-600 text-white {% else %} text-blue-600 {% endif %} text-center"
+            href="{% url 'mis_publicaciones' %}">Mis publicaciones</a>
+    </nav>
+    {% endwith %}
+    <div class="w-3/4 pl-10 flex items-center justify-start flex-col">
+        <h1 class="text-2xl font-bold text-blue-600">
+            Crea una nueva publicación
+        </h1>
+        <form method="post" class="flex flex-col gap-5 w-1/2" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label class="text-xl">Titulo:</label>
+                <input type="text" name="title" class="py-2 px-1 w-full rounded border w-1/2" placeholder="Titulo"
+                    value="{{ form.title.value|default:'' }}">
+                {% if form.title.errors %}
+                <p class="text-red-500">{{ form.title.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="text-xl">Precio:</label>
+                <input type="text" name="price" class="py-2 px-1 w-full rounded border w-1/2" placeholder="Precio"
+                    value="{{ form.price.value|default:'' }}">
+                {% if form.price.errors %}
+                <p class="text-red-500">{{ form.price.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="text-xl">Imagen:</label>
+                <input type="file" name="image" id="">
+                {% if form.image.errors %}
+                <p class="text-red-500">{{ form.image.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="text-xl">Descripción:</label>
+                <textarea name="description" class="py-2 px-1 w-full rounded border w-1/2"
+                    placeholder="Descripción">{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                <p class="text-red-500">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+
+            <button class="text-xl font-bold bg-blue-600 text-white py-2 hover:opacity-70">Cargar publicación</button>
+        </form>
+    </div>
+
+</section>
+{% endblock %}

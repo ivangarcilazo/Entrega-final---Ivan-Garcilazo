@@ -21,26 +21,36 @@
             {% endif %}
         </form>
 
-        <div class="w-full flex flex-wrap py-10">
-            {% if cars %}
-            {% for car in cars %}
-            <div
-                class="bg-white shadow-lg w-96 py-6 rounded-lg font-[sans-serif] mx-auto mt-4 border border-1 rounded-xl">
-                <div class="flex items-center gap-2 px-6">
-                    <h3 class="text-2xl text-[#333] font-extrabold flex-1">{{car.name}}</h3>
-                </div>
-                <img src="{{car.image}}" class="w-full my-6" />
-                <div class="px-6">
-                    <p class="text-sm text-gray-500">{{car.description}}</p>
-                    <div class="mt-10 flex items-center flex-wrap gap-4">
-                        <h3 class="text-xl text-[#333] font-bold flex-1">${{car.price}}</h3>
+        <div class="w-full grid grid-cols-3 2xl:grid-cols-4 gap-2 p-10 min-h-96">
+            {% if posts %}
+            {% for car in posts %}
+            <div class="bg-white flex  items-end shadow-lg w-80 h-[27rem] rounded-lg font-[sans-serif] border border-1 bg-[{{car.image.r}}]"
+                style="background-image: url('{{ car.image.url }}'); background-size: contain;">
+                <div class="bg-white w-full py-2">
+                    <div class="flex items-center gap-2 ml-3">
+                        <h3 class="text-2xl text-[#333] font-extrabold flex-1">{{car.title}}</h3>
+                    </div>
+                    <div class="px-6">
+                        <p class="text-sm text-gray-500">{{car.description}}</p>
+                        <div class="mt-10 flex items-center flex-wrap gap-4">
+                            <h3 class="text-xl text-[#333] font-bold flex-1">${{car.price}}</h3>
+                            <a href="{% url 'detalle_publicacion' car.pk %}"
+                                class="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-white bg-purple-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Ver
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
 
             {% else %}
-            <h1 class="font-bold text-gray-700 text-3xl mx-auto">No se encontró ningún valor con la búsqueda.</h1>
+            <h1 class="font-bold text-gray-700 text-3xl mx-auto">Aún no se ha agregado lo que búscas</h1>
             {% endif %}
 
         </div>
@@ -61,11 +71,15 @@
 
     function showModal() {
         const modal = document.querySelector("#modal_success")
-        modal.classList.remove("hidden")
+        if (modal) {
+            modal.classList.remove("hidden")
 
-        setTimeout(() => {
-            modal.classList.add("hidden")
-        }, 5000)
+            setTimeout(() => {
+
+                modal.classList.add("hidden")
+            }, 5000)
+        }
+
     }
 </script>
 {% endblock %}

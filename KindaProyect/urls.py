@@ -15,14 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from AppKinda.views import (index, cars, employee, clients, search_car)
+from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.conf.urls import handler404
+from AppKinda.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('empleados/', employee, name='Empleados'),
-    path('autos/',cars, name='Autos'),
-    path('clientes/',clients, name='Clientes'),
-    path('',index, name='Inicio'),
-    path('buscar_auto/', search_car)
+    path('buscar_auto/', search_car),
+    path('', include('AppAuth.urls')),
+    path('', include('AppAccount.urls')),
+    path('', include('AppKinda.urls'))
 ]
+
+handler404 = custom_404
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
